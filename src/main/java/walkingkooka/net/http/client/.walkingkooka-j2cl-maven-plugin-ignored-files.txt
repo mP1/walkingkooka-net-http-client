@@ -1,0 +1,4 @@
+#
+# Remove HttpClientFunctionFetcherJavaNetHttpClient and its collaborators from transpiling.
+#
+FetchJavaNetHttpClient*
