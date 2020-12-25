@@ -100,7 +100,7 @@ final class FetchJavaNetHttpClient extends Fetch {
      */
     private static BodyPublisher bodyPublisher(final HttpRequest request,
                                                final Charset defaultCharset) {
-        final Charset charset = HttpHeaderName.CONTENT_TYPE.headerValue(request)
+        final Charset charset = HttpHeaderName.CONTENT_TYPE.header(request)
                 .map(m -> m.contentTypeCharset(defaultCharset))
                 .orElse(defaultCharset);
 
