@@ -95,7 +95,7 @@ public final class FetchJavaNetHttpClientTest extends FetchTestCase<FetchJavaNet
             assertEquals(method, req.method(), () -> "method\n" + req);
             assertEquals(url, req.url(), () -> "url\n" + req);
             assertEquals(Optional.of(contentTypeValueIn),
-                    contentTypeHeader.headerValue(req),
+                    contentTypeHeader.header(req),
                     () -> "incorrect header " + contentTypeHeader + "\n" + req);
 
             resp.setStatus(status);
@@ -130,7 +130,7 @@ public final class FetchJavaNetHttpClientTest extends FetchTestCase<FetchJavaNet
             assertEquals(method, req.method(), () -> "method\n" + req);
             assertEquals(url, req.url(), () -> "url\n" + req);
             assertEquals(Optional.of(contentTypeValueIn),
-                    contentTypeHeader.headerValue(req),
+                    contentTypeHeader.header(req),
                     () -> "incorrect header " + contentTypeHeader + "\n" + req);
             assertEquals(bodyTextIn,
                     req.bodyText(),
