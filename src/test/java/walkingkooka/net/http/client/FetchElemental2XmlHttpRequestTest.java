@@ -23,8 +23,6 @@ import walkingkooka.net.header.HttpHeaderName;
 import walkingkooka.net.header.MediaType;
 import walkingkooka.net.http.HttpEntity;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 public final class
 FetchElemental2XmlHttpRequestTest extends FetchTestCase<FetchElemental2XmlHttpRequest> {
 
@@ -73,7 +71,7 @@ FetchElemental2XmlHttpRequestTest extends FetchTestCase<FetchElemental2XmlHttpRe
 
     private void parseHeadersAndCheck(final String headerText,
                                       final HttpEntity expected) {
-        assertEquals(expected,
+        this.checkEquals(expected,
                 FetchElemental2XmlHttpRequest.parseHeaders(headerText),
                 () -> "parseHeaders\n" + headerText + "\nfailed");
     }

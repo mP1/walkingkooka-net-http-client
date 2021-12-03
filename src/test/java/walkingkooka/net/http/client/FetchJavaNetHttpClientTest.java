@@ -57,7 +57,6 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.function.BiConsumer;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -76,7 +75,7 @@ public final class FetchJavaNetHttpClientTest extends FetchTestCase<FetchJavaNet
             final FetchException thrown = assertThrows(FetchException.class,
                     () -> this.fetch(IpPort.free())
                             .apply(this.request(HttpMethod.GET, Url.parseRelative("/does-not-exist"), HttpEntity.EMPTY)));
-            assertEquals("Connection refused", thrown.getMessage());
+            this.checkEquals("Connection refused", thrown.getMessage());
         }
     }
 
@@ -92,9 +91,9 @@ public final class FetchJavaNetHttpClientTest extends FetchTestCase<FetchJavaNet
         final String bodyText = "BodyText123456";
 
         final IpPort port = this.server((req, resp) -> {
-            assertEquals(method, req.method(), () -> "method\n" + req);
-            assertEquals(url, req.url(), () -> "url\n" + req);
-            assertEquals(Optional.of(contentTypeValueIn),
+            this.checkEquals(method, req.method(), () -> "method\n" + req);
+            this.checkEquals(url, req.url(), () -> "url\n" + req);
+            this.checkEquals(Optional.of(contentTypeValueIn),
                     contentTypeHeader.header(req),
                     () -> "incorrect header " + contentTypeHeader + "\n" + req);
 
@@ -127,12 +126,12 @@ public final class FetchJavaNetHttpClientTest extends FetchTestCase<FetchJavaNet
         final String bodyTextOut = "BodyText123456-OUT";
 
         final IpPort port = this.server((req, resp) -> {
-            assertEquals(method, req.method(), () -> "method\n" + req);
-            assertEquals(url, req.url(), () -> "url\n" + req);
-            assertEquals(Optional.of(contentTypeValueIn),
+            this.checkEquals(method, req.method(), () -> "method\n" + req);
+            this.checkEquals(url, req.url(), () -> "url\n" + req);
+            this.checkEquals(Optional.of(contentTypeValueIn),
                     contentTypeHeader.header(req),
                     () -> "incorrect header " + contentTypeHeader + "\n" + req);
-            assertEquals(bodyTextIn,
+            this.checkEquals(bodyTextIn,
                     req.bodyText(),
                     () -> "bad request body\n" + req);
 
@@ -234,10 +233,10 @@ public final class FetchJavaNetHttpClientTest extends FetchTestCase<FetchJavaNet
                                final HttpStatus status,
                                final Map<HttpHeaderName<?>, List<Object>> requiredHeaders,
                                final String bodyText) {
-        assertEquals(Optional.of(status.value()), response.status().map(HttpStatus::value), "status\n" + response);
+        this.checkEquals(Optional.of(status.value()), response.status().map(HttpStatus::value), "status\n" + response);
 
         final List<HttpEntity> entities = response.entities();
-        assertEquals(1, entities.size(), "1 entity\n" + response);
+        this.checkEquals(1, entities.size(), "1 entity\n" + response);
 
         final HttpEntity first = entities.get(0);
         final Map<HttpHeaderName<?>, List<?>> responseHeaders = first.headers();
@@ -250,8 +249,8 @@ public final class FetchJavaNetHttpClientTest extends FetchTestCase<FetchJavaNet
             }
         });
 
-        assertEquals(requiredHeaders, filtered, () -> "response headers incorrect\n" + response.toString());
-        assertEquals(bodyText, first.bodyText(), () -> "response body\n" + response.toString());
+        this.checkEquals(requiredHeaders, filtered, () -> "response headers incorrect\n" + response.toString());
+        this.checkEquals(bodyText, first.bodyText(), () -> "response body\n" + response.toString());
     }
 
     private static <T> List<T> list(final T items) {
